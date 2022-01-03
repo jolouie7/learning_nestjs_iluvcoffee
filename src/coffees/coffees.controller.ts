@@ -1,3 +1,6 @@
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { CoffeesService } from './coffees.service';
 import {
   Body,
   Controller,
@@ -11,30 +14,31 @@ import {
 
 @Controller('coffees')
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
+
   @Get()
-  findall(@Query() paginationQuery) {
-    const { limit, offset } = paginationQuery;
-    return `This action returns all the coffees. Limit ${limit}, offset: ${offset}`;
+  findAll() {
+    // const { limit, offset } = paginationQuery;
+    return this.coffeesService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `This action returns #${id} coffee`;
+    return this.coffeesService.findOne(id);
   }
 
   @Post()
-  create(@Body() body) {
-    return body;
-    // return `This action creates a coffee`
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return `This action updates #${id} coffee`;
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `This action removes #${id} coffee from the database`;
+    return this.coffeesService.remove(id);
   }
 }

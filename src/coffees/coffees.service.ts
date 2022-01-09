@@ -4,6 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { Coffee } from './entities/coffee.entity';
 
 @Injectable()
@@ -16,6 +18,11 @@ export class CoffeesService {
       flavors: ['chocolate', 'vanilla'],
     },
   ];
+
+  constructor(
+    @InjectRepository(Coffee)
+    private readonly CoffeeRepository: Repository<Coffee>,
+  ) {}
 
   findAll() {
     return this.coffees;

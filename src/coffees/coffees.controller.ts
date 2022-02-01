@@ -17,8 +17,8 @@ export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
   @Get()
-  findAll() {
-    // const { limit, offset } = paginationQuery;
+  findAll(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
     return this.coffeesService.findAll();
   }
 
@@ -34,9 +34,15 @@ export class CoffeesController {
     return this.coffeesService.create(createCoffeeDto);
   }
 
+  //! Didn't work for whatever reason
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  //   return this.coffeesService.update(id, updateCoffeeDto);
+  // }
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
-    return this.coffeesService.update(id, updateCoffeeDto);
+  update(@Param('id') id: string, @Body() body) {
+    return this.coffeesService.update(id, body);
   }
 
   @Delete(':id')

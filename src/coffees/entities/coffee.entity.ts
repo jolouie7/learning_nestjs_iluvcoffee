@@ -3,16 +3,19 @@ import { type } from 'os';
 import {
   Column,
   Entity,
+  Index,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+@Index(['name', 'type'])
 @Entity() // sql table === 'coffee'
 export class Coffee {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index() // Use with common queries such as name. This helps speed up performance
   @Column()
   name: string;
 
